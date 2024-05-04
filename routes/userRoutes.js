@@ -7,19 +7,20 @@ const{
     getContacts,
     createContacts,
     updateContact,
-    deleteContact
+    deleteContact,
+    signin
 }=require("../controllers/userController");
 
 
 
-router.route('/').get(getContacts)
+router.route('/getallusers').get(getContacts)
 
-router.route('/:id').get(getContact)
+router.route('/getuserbyid/:id').get(getContact)
 
-router.route('/').post(createContacts)
+router.route('/register').post(createContacts)
+router.route('/signin').post(signin)
+router.route('/updateuser/:id').put(updateContact)
 
-router.route('/:id').put(updateContact)
-
-router.route('/:id').delete(deleteContact)
+router.route('/deleteuser/:id').delete(deleteContact)
 
  module.exports=router

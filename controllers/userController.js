@@ -2,6 +2,7 @@ const asyncHandler=require("express-async-handler")
 const bcrypt = require("bcrypt")
 const Joi = require("joi"); // Import Joi for validation
 const User=require("../models/userModels")
+const jwt = require("jsonwebtoken");
 //@desc crete  contact
 //@route POST /api/contacts
 //@access public
@@ -204,10 +205,57 @@ const deleteContact = asyncHandler(async (req, res) => {
   }
 });
 
+
+//@desc Sign in user
+//@route POST /api/users/signin
+//@access Public
+const signin = asyncHandler(async (req, res) => {
+  const { phoneNumber, password } = req.body;
+
+  // Basic validation
+  if (!phoneNumber || !password) {
+    res.status(400).json({ message: "All fields are required" });
+    return;
+  }
+
+  try {
+    // Find the user by phone number
+    const user = await User.findOne({ phoneNumber });
+
+    if (!user) {
+      res.status(400).json({ message: "Invalid phone number" });
+      return;
+    }
+
+    // Compare hashed password with the provided password
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      res.status(400).json({ message: "Invalid password" });
+      return;
+    }
+
+    // Generate JWT with 10 minutes expiration time
+    const payload = { userId: user._id };
+    const token = jwt.sign(payload,
+       process.env.TOKEN_SECRET,
+        { expiresIn: "50m" }); // Set expiresIn to "10m"
+
+    res.status(200).json({
+      message: "Login successful",
+      token,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+  }
+});
+
 module.exports = {
     getContact,
     getContacts,
     createContacts,
     updateContact,
-    deleteContact
+    deleteContact,
+    signin
 }
