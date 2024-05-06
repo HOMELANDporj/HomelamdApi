@@ -251,11 +251,20 @@ const signin = asyncHandler(async (req, res) => {
   }
 });
 
+//@desc get current user
+//@route POST /api/users/getCurrentUser
+//@access private
+const currentUser=asyncHandler(async(req,res)=>{
+  res.json({message:"Current user information "})
+
+})
+
 module.exports = {
     getContact,
     getContacts,
     createContacts,
     updateContact,
     deleteContact,
-    signin
+    signin,
+    currentUser
 }

@@ -8,8 +8,10 @@ const{
     createContacts,
     updateContact,
     deleteContact,
-    signin
+    signin,
+    currentUser
 }=require("../controllers/userController");
+const validateToken = require("../middleware/validateTokenHandler");
 
 
 
@@ -22,5 +24,6 @@ router.route('/signin').post(signin)
 router.route('/updateuser/:id').put(updateContact)
 
 router.route('/deleteuser/:id').delete(deleteContact)
+router.get("/getCurrentUser",validateToken, currentUser)
 
  module.exports=router
