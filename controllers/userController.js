@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt")
 const Joi = require("joi"); // Import Joi for validation
 const User=require("../models/userModels")
 const jwt = require("jsonwebtoken");
+const validateToken=require("../middleware/validateTokenHandler")
 //@desc crete  contact
 //@route POST /api/contacts
 //@access public
@@ -209,6 +210,7 @@ const deleteContact = asyncHandler(async (req, res) => {
 //@desc Sign in user
 //@route POST /api/users/signin
 //@access Public
+
 const signin = asyncHandler(async (req, res) => {
   const { phoneNumber, password } = req.body;
 
@@ -231,15 +233,27 @@ const signin = asyncHandler(async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
-      res.status(400).json({ message: "Invalid password" });
+      res.status(401).json({ message: "Invalid password" }); // Use 401 for unauthorized access
       return;
     }
 
-    // Generate JWT with 10 minutes expiration time
-    const payload = { userId: user._id };
-    const token = jwt.sign(payload,
-       process.env.TOKEN_SECRET,
-        { expiresIn: "50m" }); // Set expiresIn to "10m"
+    // Generate JWT with 10 minutes expiration time (you can adjust expiresIn)
+    const payload = {
+      userId: user._id,
+      name: user.name, // Include desired user data in payload
+      phoneNumber: user.phoneNumber,
+    };
+   // console.log(user)
+    const token = jwt.sign({
+      user:{
+        
+          userId: user._id,
+          name: user.name, // Include desired user data in payload
+          phoneNumber: user.phoneNumber,
+          homeAddress: user.homeAddress
+        
+      },}, 
+      process.env.TOKEN_SECRET, { expiresIn: "10m" });
 
     res.status(200).json({
       message: "Login successful",
@@ -247,17 +261,28 @@ const signin = asyncHandler(async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server Error" });
+    res.status(500).json({ message: "Server Error" }); // Consider more specific error handling
   }
 });
+
 
 //@desc get current user
 //@route POST /api/users/getCurrentUser
 //@access private
-const currentUser=asyncHandler(async(req,res)=>{
-  res.json({message:"Current user information "})
+const currentUser = asyncHandler(async (req, res) => {
+  // Wait for req.user to be populated by validateToken middleware
+ // await validateToken(req, res); 
 
-})
+  // Check if user object exists in req.user (populated by validateToken)
+  if (!req.user) {
+    res.status(401).json({ message: "Unauthorized. Please login to access this resource." });
+    return;
+  }
+
+  //const { _id, name, phoneNumber } = req.user; // Access user data
+
+  res.json(req.user);
+});
 
 module.exports = {
     getContact,
