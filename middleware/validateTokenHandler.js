@@ -14,22 +14,18 @@ const validateToken = asyncHandler(async (req, res, next) => {
       // Verify the token using JWT.verify
       const decoded = await jwt.verify(token, process.env.TOKEN_SECRET);
 
-      console.log('Decoded user1:', decoded); // Log for debugging
-
       // Attach the decoded user data to req.user
       req.user = decoded.user; // Assuming 'user' property in decoded data
-
-      console.log('req.user1:', req.user); // Log for debugging after assignment
 
       // Continue to the next middleware or route handler
       next();
     } catch (error) {
-      // Handle verification errors
+      // Handle verification errors without stopping the server
       console.error(error);
       res.status(401).json({ message: "Unauthorized. Invalid token." });
     }
   } else {
-    // Handle missing authorization header
+    // Handle missing authorization header without stopping the server
     res.status(401).json({ message: "Unauthorized. Missing authorization header." });
   }
 });

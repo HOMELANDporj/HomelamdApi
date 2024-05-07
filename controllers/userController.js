@@ -262,7 +262,8 @@ const signin = asyncHandler(async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server Error" }); // Consider more specific error handling
+    res.status(500).json({ message: "Server Error" });
+    return // Consider more specific error handling
   }
 });
 
