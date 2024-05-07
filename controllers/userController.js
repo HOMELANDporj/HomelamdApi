@@ -250,7 +250,13 @@ const signin = asyncHandler(async (req, res) => {
           userId: user._id,
           name: user.name, // Include desired user data in payload
           phoneNumber: user.phoneNumber,
-          homeAddress: user.homeAddress
+          homeAddress: user.homeAddress,
+          phoneNumber: user.phoneNumber,
+          workAddress: user.workAddress,
+          emergencyContact: user.emergencyContact,
+          idPictureFront: user.idPictureFront,
+          idPictureBack: user.idPictureBack,
+          selfie: user.selfie,
         
       },}, 
       process.env.TOKEN_SECRET, { expiresIn: "10m" });

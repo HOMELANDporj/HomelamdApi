@@ -18,6 +18,7 @@ app.use(express.json());
 // Routes
 app.use("/Homeland/User", require("./routes/userRoutes"));
 app.use("/Homeland/service", require("./routes/serviceRequestRout")); // Corrected typo
+app.use("/Homeland/profile", require("./routes/profileRoute")); // Corrected typo
 
 // Error handling middleware - must be defined last
 app.use(errorHandler);

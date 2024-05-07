@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Profile= require("./profileModel")
 
 const userSchema = mongoose.Schema({
   name: {
@@ -50,5 +51,44 @@ const userSchema = mongoose.Schema({
   }]
 
 }, { timestamps: true });
+
+
+
+
+
+
+// Middleware to create profile for a new user
+userSchema.pre('save', async function(next) {
+  try {
+    // Only create profile if it doesn't already exist
+    if (!this.profile) {
+      // Create a new profile
+      const newProfile = new Profile({
+        user: this._id,
+        fullName: this.name,
+        address: this.homeAddress,
+        organizationName: this.organizationName,
+        contactInformation: this.contactInformation,
+        emergencyContact: this.emergencyContact,
+        phoneNumber: this.phoneNumber
+        // Add other profile fields here
+      });
+      // Save the profile
+      await newProfile.save();
+      // Set the profile reference in the user document
+      this.profile = newProfile._id;
+    }
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
+
+
+
+
+
+
 
 module.exports = mongoose.model("User", userSchema);

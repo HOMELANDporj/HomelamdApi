@@ -7,6 +7,8 @@ const profileSchema = mongoose.Schema({
     required: true
   },
   fullName: String,
+  phoneNumber: String,
+  profilePicture: String,
   address: String,
   organizationName: String,
   contactInformation: String,
