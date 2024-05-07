@@ -35,6 +35,20 @@ const userSchema = mongoose.Schema({
     name: String,
     phoneNumber: String,
   },
+  profile: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Profile'
+  },
+
+  serviceRequests: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'ServiceRequest'
+  }],
+  notifications: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Notification'
+  }]
+
 }, { timestamps: true });
 
 module.exports = mongoose.model("User", userSchema);

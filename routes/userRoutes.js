@@ -3,27 +3,28 @@ const express= require("express")
 const router =express.Router()
 
 const{
-    getContact,
-    getContacts,
-    createContacts,
-    updateContact,
-    deleteContact,
+   
     signin,
-    currentUser
+    currentUser,
+    getAllUsers,
+    getUserById,
+    registerUser,
+    updateUserProfile,
+    deleteUser
 }=require("../controllers/userController");
 const validateToken = require("../middleware/validateTokenHandler");
 
 
 
-router.route('/getallusers').get(getContacts)
+router.route('/getallusers').get(getAllUsers)
 
-router.route('/getuserbyid/:id').get(getContact)
+router.route('/getuserbyid/:id').get(getUserById)
 
-router.route('/register').post(createContacts)
+router.route('/register').post(registerUser)
 router.route('/signin').post(signin)
-router.route('/updateuser/:id').put(updateContact)
+router.route('/updateuser/:id').put(updateUserProfile)
 
-router.route('/deleteuser/:id').delete(deleteContact)
+router.route('/deleteuser/:id').delete(deleteUser)
 router.get("/getCurrentUser",validateToken, currentUser)
 
  module.exports=router

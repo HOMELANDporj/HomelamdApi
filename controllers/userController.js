@@ -7,7 +7,7 @@ const validateToken=require("../middleware/validateTokenHandler")
 //@desc crete  contact
 //@route POST /api/contacts
 //@access public
-const createContacts = asyncHandler(async (req, res) => {
+const registerUser = asyncHandler(async (req, res) => {
   console.log("The body requested to post is => ", req.body);
 
   const {
@@ -39,7 +39,7 @@ const createContacts = asyncHandler(async (req, res) => {
   });
 
   // Validate the request body against the schema
-  const { error } = userSchema.validate(req.body);
+  const { error } = userSchema.validate(req.body, { allowUnknown: true }); // Allow unknown fields
 
   if (error) {
     return res.status(400).json({ message: error.details[0].message });
@@ -75,7 +75,7 @@ const createContacts = asyncHandler(async (req, res) => {
 //@desc Get contact
 //@route GEt /api/contacts
 //@access public
-const getContacts = asyncHandler(async (req, res) => {
+const getAllUsers = asyncHandler(async (req, res) => {
   try {
     const users = await User.find();
     res.status(200).json(users);
@@ -88,7 +88,7 @@ const getContacts = asyncHandler(async (req, res) => {
 //@desc Get contact by id 
 //@route GEt /api/contacts/:id
 //@access public
-const getContact = asyncHandler(async (req, res) => {
+const getUserById = asyncHandler(async (req, res) => {
   // Define Joi schema for validation
   const schema = Joi.object({
     id: Joi.string().alphanum().required(),
@@ -121,7 +121,7 @@ const getContact = asyncHandler(async (req, res) => {
 //@desc update contact by id 
 //@route PUT /api/contacts/:id
 //@access public
-const updateContact = asyncHandler(async (req, res) => {
+const updateUserProfile = asyncHandler(async (req, res) => {
   // Define Joi schema for validation
   const schema = Joi.object({
     name: Joi.string().min(3).max(50),
@@ -170,7 +170,7 @@ const updateContact = asyncHandler(async (req, res) => {
 //@desc Delete contact by id 
 //@route DELETE /api/contacts/:id
 //@access public
-const deleteContact = asyncHandler(async (req, res) => {
+const deleteUser = asyncHandler(async (req, res) => {
   // Define Joi schema for validation
   const schema = Joi.object({
     id: Joi.string().alphanum().required(),
@@ -282,11 +282,11 @@ const currentUser = asyncHandler(async (req, res) => {
 });
 
 module.exports = {
-    getContact,
-    getContacts,
-    createContacts,
-    updateContact,
-    deleteContact,
+    getUserById,
+    getAllUsers,
+    registerUser,
+    updateUserProfile,
+    deleteUser,
     signin,
     currentUser
 }
