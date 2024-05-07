@@ -277,10 +277,7 @@ const currentUser = asyncHandler(async (req, res) => {
   if (!req.user) {
     res.status(401).json({ message: "Unauthorized. Please login to access this resource." });
     return;
-  }
-
-  //const { _id, name, phoneNumber } = req.user; // Access user data
-
+  }  //const { _id, name, phoneNumber } = req.user; // Access user data
   res.json(req.user);
 });
 
