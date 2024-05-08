@@ -22,6 +22,7 @@ app.use("/Homeland/profile", require("./routes/profileRoute")); // Corrected typ
 app.use("/Homeland/notification", require("./routes/notificationRoute")); // Corrected typo
 app.use("/Homeland/driver", require("./routes/driverRoute")); // Corrected typo
 app.use("/Homeland/vechel", require("./routes/vechelRoute")); // Corrected typo
+app.use("/Homeland/carowners", require("./routes/carownerRoute")); // Corrected typo
 
 // Error handling middleware - must be defined last
 app.use(errorHandler);
