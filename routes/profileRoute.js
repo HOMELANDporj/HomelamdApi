@@ -14,7 +14,7 @@ const validateToken = require("../middleware/validateTokenHandler");
 router.get('/getProfile', validateToken, getCurrentUserProfile);
 router.put('/updateProfile', validateToken, updateProfile);
 // Search for profiles based on certain criteria
-router.get('/search', searchUserProfiles);
+router.get('/search',validateToken, searchUserProfiles);
 
 
 module.exports=router

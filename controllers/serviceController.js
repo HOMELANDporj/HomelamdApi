@@ -1,47 +1,61 @@
 const asyncHandler=require("express-async-handler")
 const ServiceRequest = require('../models/serviceModel');
-
+const Driver = require('../models/driverModel');
+const Notification= require('../models/notificatioModel');
 
 //@desc crete  contact
 //@route POST /api/contacts
 //@access private
 const requestService = asyncHandler(async (req, res) => {
-    try {
-        // Extract necessary data from the request body
-        const { pickupLocation, dropoffLocation, pickupTime } = req.body;
-    
-        // Validate request data (you can use a library like Joi for validation)
-        if (!pickupLocation || !dropoffLocation || !pickupTime) {
-          return res.status(400).json({ message: 'All fields are required' });
-        }
-    
-        // Assuming authentication middleware is used to verify user's identity and retrieve user's ID from the request object
-        const userId = req.user.userId;
-    
-        // Create the service request
-        const serviceRequest = new ServiceRequest({
-          user: userId,
-          pickupLocation,
-          dropoffLocation,
-          pickupTime
-        });
-    
-        // Save the service request to the database
-        await serviceRequest.save();
-    
-        // Optionally, you can perform additional actions such as sending notifications, etc.
-    
-        res.status(201).json({ message: 'Service request created successfully', serviceRequest });
-      } catch (error) {
-        console.error('Error occurred while creating service request:', error);
-        res.status(500).json({ message: 'Server Error' });
+  try {
+      // Extract necessary data from the request body
+      const { pickupLocation, dropoffLocation, pickupTime } = req.body;
+  
+      // Validate request data (you can use a library like Joi for validation)
+      if (!pickupLocation || !dropoffLocation || !pickupTime) {
+        return res.status(400).json({ message: 'All fields are required' });
       }
+  
+      // Assuming authentication middleware is used to verify user's identity and retrieve user's ID from the request object
+      const userId = req.user.userId;
+  
+      // Create the service request
+      const serviceRequest = new ServiceRequest({
+        user: userId,
+        pickupLocation,
+        dropoffLocation,
+        pickupTime
+      });
+  
+      // Save the service request to the database
+      await serviceRequest.save();
+  
+      // Find all drivers
+      const drivers = await Driver.find(); // Assuming there's a Driver model
+      
+      // Construct notification content
+      const notificationContent = `New service request created:
+        Pickup Location: ${pickupLocation},
+        Dropoff Location: ${dropoffLocation},
+        Pickup Time: ${pickupTime}`;
+      
+      // Create a notification for each driver
+      const notifications = drivers.map(driver => ({
+        user: driver._id,
+        content: notificationContent
+      }));
 
+      // Save the notifications to the database
+      await Notification.insertMany(notifications);
+  
+      res.status(201).json({ message: 'Service request created successfully', serviceRequest });
+    } catch (error) {
+      console.error('Error occurred while creating service request:', error);
+      res.status(500).json({ message: 'Server Error' });
+    }
+});
 
-})
-
-
-//@desc crete  contact
+//@desc get all services requestes
 //@route GET /api/contacts
 //@access private
 // serviceRequestController.js

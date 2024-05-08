@@ -58,6 +58,10 @@ const updateProfile = async (req, res) => {
 
 // Search for profiles based on phone number 
 // it is query based on phone number like http://localhost:5001/Homeland/profile/search?phoneNumber=0902345678
+// Function to search the any user's profile using phonenumber
+// @desc search profile
+// @route GET 
+// @access private
 const searchUserProfiles = async (req, res) => {
     try {
       const { phoneNumber } = req.query;
