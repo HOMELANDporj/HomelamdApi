@@ -259,7 +259,7 @@ const signin = asyncHandler(async (req, res) => {
           selfie: user.selfie,
         
       },}, 
-      process.env.TOKEN_SECRET, { expiresIn: "10m" });
+      process.env.TOKEN_SECRET, { expiresIn: "60m" });
 
     res.status(200).json({
       message: "Login successful",

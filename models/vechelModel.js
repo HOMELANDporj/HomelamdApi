@@ -1,9 +1,19 @@
 const mongoose = require("mongoose");
 
 const vehicleSchema = mongoose.Schema({
-  make: String,
-  model: String,
-  year: String,
+  make: {
+    type: String,
+    required: true
+  },
+  model: {
+    type: String,
+    required: true
+  },
+  year: {
+    type: Number,
+    required: true
+  },
+  color: String,
   licensePlate: {
     type: String,
     required: true,
@@ -20,7 +30,14 @@ const vehicleSchema = mongoose.Schema({
   serviceRequests: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'ServiceRequest'
-  }]
+  }],
+  mileage: Number,
+  transmission: String,
+  fuelType: String,
+  engineSize: String,
+  seatingCapacity: Number,
+  registrationDate: Date,
+  insuranceExpiryDate: Date
 }, { timestamps: true });
 
 module.exports = mongoose.model("Vehicle", vehicleSchema);

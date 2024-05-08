@@ -1,4 +1,4 @@
-const Notification = require("../models/notificationModel");
+const Notification = require("../models/notificatioModel");
 
 /**
  * Fetches all unread notifications for the authenticated user.
@@ -62,7 +62,33 @@ const filterNotifications = async (req, res) => {
       res.status(500).json({ message: 'Server Error' });
     }
   };
+
+
+// Controller function to count unread notifications for the authenticated user
+//@desc Controller function to count unread notifications for the authenticated user
+//@route GET 
+//@access private
+const countUnreadNotifications = async (req, res) => {
+  try {
+    // Extract user ID from the request object (assuming it's populated by the authentication middleware)
+    const userId = req.user.userId;
+
+    // Count unread notifications for the authenticated user
+    const unreadNotificationCount = await Notification.countDocuments({
+      user: userId,
+      readStatus: false // Filter for unread notifications
+    });
+
+    // Return the count of unread notifications as a response
+    res.status(200).json({ count: unreadNotificationCount });
+  } catch (error) {
+    console.error('Error counting unread notifications:', error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
+
 module.exports = {
   viewUnreadNotifications,
-  filterNotifications
+  filterNotifications,
+  countUnreadNotifications
 };

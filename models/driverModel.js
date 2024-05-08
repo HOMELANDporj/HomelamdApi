@@ -8,7 +8,7 @@ const driverSchema = mongoose.Schema({
   licenseNumber: {
     type: String,
     required: true,
-    unique: true
+    unique: true // This unique constraint should be removed
   },
   vehicle: {
     type: mongoose.Schema.Types.ObjectId,
@@ -21,8 +21,7 @@ const driverSchema = mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true,
-    unique: true
+    required: true // Remove the unique constraint from here
   }
 }, { timestamps: true });
 
