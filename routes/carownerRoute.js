@@ -12,5 +12,5 @@ const validateToken = require('../middleware/validateTokenHandler');
 router.post('/createCarOwner',validateToken,createCarOwner);
 router.get('/getcarowner',validateToken,getAllCarOwners);
 router.delete('/deletecarowner/:id',validateToken,deleteCarOwner);
-router.put('updatecarowner/:id', validateToken,updateCarOwner );
+router.put('/updatecarowner/:id', validateToken,updateCarOwner );
 module.exports = router;

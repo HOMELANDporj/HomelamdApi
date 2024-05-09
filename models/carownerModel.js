@@ -23,6 +23,11 @@ const carOwnerSchema = new mongoose.Schema({
   country: { 
     type: String 
 },
+role: {
+  type: String,
+  enum: ['carOwner',],
+  default: 'carOwner',
+},
   idPictureFront: {
     ype: String
  }, // Path to the back of ID picture

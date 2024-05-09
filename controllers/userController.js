@@ -9,7 +9,7 @@ const validateToken=require("../middleware/validateTokenHandler")
 //@access public
 const registerUser = asyncHandler(async (req, res) => {
   console.log("The body requested to post is => ", req.body);
-
+ 
   const {
     name,
     phoneNumber,

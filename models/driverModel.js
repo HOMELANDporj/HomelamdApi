@@ -18,6 +18,11 @@ const driverSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'ServiceRequest'
   }],
+  role: {
+    type: String,
+    enum: ['driver',],
+    default: 'driver',
+  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

@@ -40,6 +40,11 @@ const userSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Profile'
   },
+  role: {
+    type: String,
+    enum: ['user',],
+    default: 'user',
+  },
 
   serviceRequests: [{
     type: mongoose.Schema.Types.ObjectId,

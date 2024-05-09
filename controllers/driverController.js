@@ -1,7 +1,9 @@
 // controllers/driverController.js
 
 const Driver = require('../models/driverModel');
-
+const bcrypt = require('bcrypt');
+const Joi = require('joi');
+const asyncHandler=require("express-async-handler")
 // Get all drivers
 const getAllDrivers = async (req, res) => {
     try {
@@ -33,27 +35,42 @@ const getDriverById = async (req, res) => {
 };
 
 
-/// Create a new driver
-const createDriver = async (req, res) => {
-    try {
-        // Extract the user ID from the JWT payload
-        const userId = req.user.userId;
+const createDriver = asyncHandler(async (req, res) => {
+    console.log("The body requested to post is => ", req.body);
+ 
+    const {
+        fullName,
+        licenseNumber,
+        vehicle,
+    } = req.body;
 
-        // Create a new driver with the user ID
-        const driver = new Driver({
-            ...req.body,
-            user: userId
-        });
+    // Define Joi schema for validation
+    const driverSchema = Joi.object({
+        fullName: Joi.string().required(),
+        licenseNumber: Joi.string().required(),
+        vehicle: Joi.string().optional(), // Assuming vehicle is provided as ID of an existing vehicle
+    });
 
-        // Save the new driver to the database
-        await driver.save();
+    // Validate the request body against the schema
+    const { error } = driverSchema.validate(req.body);
 
-        res.status(201).json(driver);
-    } catch (error) {
-        console.error('Error creating driver:', error);
-        res.status(500).json({ message: 'Server Error' });
+    if (error) {
+        return res.status(400).json({ message: error.details[0].message });
     }
-};
+
+    // Create the driver
+    const driver = new Driver({
+        fullName,
+        licenseNumber,
+        vehicle,
+        user: req.user.userId, // Assuming user ID is extracted from JWT payload
+    });
+
+    // Save the new driver to the database
+    await driver.save();
+    res.status(201).json(driver);
+});
+
 // Update driver
 const updateDriver = async (req, res) => {
     try {
