@@ -7,17 +7,24 @@ const vehicleSchema = mongoose.Schema({
   },
   model: {
     type: String,
-    required: true
+   // required: true
   },
   year: {
     type: Number,
-    required: true
+   // required: true
   },
   color: String,
   licensePlate: {
     type: String,
-    required: true,
-    unique: true
+   // required: true,
+    //unique: true
+  },
+  
+  librai: {
+    type:String,
+    required: [true, "Id picture front is required"],
+    // type: mongoose.Schema.Types.ObjectId,
+    // ref: 'Image',
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,

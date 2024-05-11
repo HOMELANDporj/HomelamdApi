@@ -28,10 +28,28 @@ role: {
   enum: ['carOwner',],
   default: 'carOwner',
 },
-  idPictureFront: {
-    ype: String
- }, // Path to the back of ID picture
-  notifications: [{
+idPictureFront: {
+  type:String,
+  required: [true, "Id picture front is required"],
+  // type: mongoose.Schema.Types.ObjectId,
+  // ref: 'Image',
+},
+idPictureBack: {
+  type:String,
+  required: [true, "Id picture back is required"],
+  // type: mongoose.Schema.Types.ObjectId,
+  // ref: 'Image',
+},
+
+selfie: {
+  type:String,
+  required: [true, "Selfie is required"],
+  // type: mongoose.Schema.Types.ObjectId,
+  // ref: 'Image',
+  // type: mongoose.Schema.Types.ObjectId,
+  // ref: 'Image',
+},
+notifications: [{
      type: mongoose.Schema.Types.ObjectId,
       ref: 'Notification'
      }],

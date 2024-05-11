@@ -15,7 +15,7 @@ const registerUser = asyncHandler(async (req, res) => {
     name,
     phoneNumber,
     password,
-    homeAddress,
+    homeAddress, 
     workAddress,
     emergencyContact,
   } = req.body;
@@ -23,7 +23,7 @@ const registerUser = asyncHandler(async (req, res) => {
   const idPictureBack = req.files['idPictureBack'][0].filename;
   const selfie = req.files['selfie'][0].filename;
 
-  //const { idPictureFrontId, idPictureBackId, selfieId } = req.files;
+  //const { idPictureFrontId, idPictureBackId, selfieId } = req.files; 
   // Define Joi schema for validation
   const userSchema = Joi.object({
     name: Joi.string().required().min(3).max(50),

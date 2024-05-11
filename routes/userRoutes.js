@@ -8,7 +8,7 @@ const path = require('path');
 
 
 // ... rest of your code
-
+ 
 
 const{
    
@@ -40,7 +40,7 @@ const storage = multer.diskStorage({
   
 const validateToken = require("../middleware/validateTokenHandler");
 
-
+ 
 
 router.route('/getallusers').get(getAllUsers)
 

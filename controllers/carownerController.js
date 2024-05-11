@@ -9,14 +9,15 @@ const createCarOwner = asyncHandler(async (req, res) => {
  
   const {
     name,
-    phoneNumber,
+    phoneNumber, 
     password,
-    idPictureFront,
     address,
     city,
     country,
   } = req.body;
-
+  const idPictureFront = req.files['idPictureFront'][0].filename;
+  const idPictureBack = req.files['idPictureBack'][0].filename;
+  const selfie = req.files['selfie'][0].filename;
   // Define Joi schema for validation
   const carOwnerSchema = Joi.object({
     name: Joi.string().required().min(3).max(50),
@@ -50,6 +51,8 @@ const createCarOwner = asyncHandler(async (req, res) => {
     phoneNumber,
     password: hashedPassword,
     idPictureFront,
+    idPictureBack,
+    selfie,
     address,
     city,
     country,

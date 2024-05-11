@@ -41,7 +41,10 @@ const userSchema = mongoose.Schema({
     type: String,
     // required: [true, "Home address is required"] // Optional, uncomment if needed
   },
-  workAddress: String,
+  workAddress: {
+    type: String,
+    // required: [true, "Work address is required"] // Optional, uncomment if needed
+    },
   emergencyContact: {
     name: String,
     phoneNumber: String,

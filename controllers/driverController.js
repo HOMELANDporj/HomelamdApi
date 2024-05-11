@@ -4,7 +4,7 @@ const Driver = require('../models/driverModel');
 const bcrypt = require('bcrypt');
 const Joi = require('joi');
 const asyncHandler=require("express-async-handler")
-// Get all drivers
+// Get all drivers 
 const getAllDrivers = async (req, res) => {
     try {
         const drivers = await Driver.find();
@@ -39,16 +39,34 @@ const createDriver = asyncHandler(async (req, res) => {
     console.log("The body requested to post is => ", req.body);
  
     const {
-        fullName,
-        licenseNumber,
+        name,
+        phoneNumber,
+        password,
         vehicle,
-    } = req.body;
+        homeAddress, 
+        workAddress,
+        
+      } = req.body;
+
+    const idPictureFront = req.files['idPictureFront'][0].filename;
+    const idPictureBack = req.files['idPictureBack'][0].filename;
+    const selfie = req.files['selfie'][0].filename;
 
     // Define Joi schema for validation
     const driverSchema = Joi.object({
-        fullName: Joi.string().required(),
-        licenseNumber: Joi.string().required(),
-        vehicle: Joi.string().optional(), // Assuming vehicle is provided as ID of an existing vehicle
+        name: Joi.string().required().min(3).max(50),
+        licenseNumber: Joi.string().optional(),
+        vehicle: Joi.string().optional(),
+        phoneNumber: Joi.string().regex(/^\d{10}$/).required(),
+        password: Joi.string().min(8).required(),
+        homeAddress: Joi.string().optional(),
+        // idPictureFront: Joi.string().optional(),
+        // idPictureBack: Joi.string().optional(),
+        // selfie: Joi.string().optional(),
+        workAddress: Joi.string().optional(),
+        
+        
+        // Assuming vehicle is provided as ID of an existing vehicle
     });
 
     // Validate the request body against the schema
@@ -57,12 +75,21 @@ const createDriver = asyncHandler(async (req, res) => {
     if (error) {
         return res.status(400).json({ message: error.details[0].message });
     }
+      // Hash the given password
+  const hashedPassword = await bcrypt.hash(password, 10);
+
 
     // Create the driver
     const driver = new Driver({
-        fullName,
-        licenseNumber,
+        name,
+        phoneNumber,
+        password: hashedPassword,
+        idPictureFront,
+        idPictureBack,
+        selfie,
         vehicle,
+        homeAddress, 
+        workAddress,
         user: req.user.userId, // Assuming user ID is extracted from JWT payload
     });
 

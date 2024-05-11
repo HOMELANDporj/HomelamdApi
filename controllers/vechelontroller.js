@@ -1,17 +1,29 @@
 // vehicleController.js
 
 const Vehicle = require('../models/vechelModel');
+const Joi = require('joi');
 
-// Function to create a new vehicle
+
+// Define Joi schema for vehicle creation
+const vehicleSchema = Joi.object({
+  make: Joi.string().required(),
+  model: Joi.string().required(),
+  year: Joi.number().integer().min(1900).max(new Date().getFullYear()).required(),
+  licensePlate: Joi.string().required(),
+  //librai: Joi.string().required(), // Assuming 'librai' is the filename
+});
+
 const createVehicle = async (req, res) => {
   try {
+    // Validate request body against schema
+    const { error } = vehicleSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ message: error.details[0].message });
+    }
+
     // Extract necessary data from the request body
     const { make, model, year, licensePlate } = req.body;
-
-    // Check if all required fields are provided
-    if (!make || !model || !year || !licensePlate) {
-      return res.status(400).json({ message: 'All fields are required' });
-    }
+    const librai = req.files['librai'][0].filename;
 
     // Assuming the authenticated user's ID is available in the request object
     const userId = req.user.userId;
@@ -19,9 +31,10 @@ const createVehicle = async (req, res) => {
     // Create a new vehicle instance
     const vehicle = new Vehicle({
       make,
-      model,
+      model, 
       year,
       licensePlate,
+      librai,
       owner: userId // Assign the owner ID
     });
 
@@ -35,7 +48,6 @@ const createVehicle = async (req, res) => {
     res.status(500).json({ message: 'Server Error' });
   }
 };
-
 
 // Function to retrieve all vehicles created by the current user
 const getMyVehicles = async (req, res) => {
