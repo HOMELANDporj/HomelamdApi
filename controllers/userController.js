@@ -9,27 +9,29 @@ const validateToken=require("../middleware/validateTokenHandler")
 //@access public
 const registerUser = asyncHandler(async (req, res) => {
   console.log("The body requested to post is => ", req.body);
+   //const { idPictureFrontId, idPictureBackId, selfieId } = req.files;
  
   const {
     name,
     phoneNumber,
     password,
-    idPictureFront,
-    idPictureBack,
-    selfie,
     homeAddress,
     workAddress,
     emergencyContact,
   } = req.body;
+  const idPictureFront = req.files['idPictureFront'][0].filename;
+  const idPictureBack = req.files['idPictureBack'][0].filename;
+  const selfie = req.files['selfie'][0].filename;
 
+  //const { idPictureFrontId, idPictureBackId, selfieId } = req.files;
   // Define Joi schema for validation
   const userSchema = Joi.object({
     name: Joi.string().required().min(3).max(50),
     phoneNumber: Joi.string().regex(/^\d{10}$/).required(),
     password: Joi.string().min(8).required(),
-    idPictureFront: Joi.string().optional(),
-    idPictureBack: Joi.string().optional(),
-    selfie: Joi.string().optional(),
+    // idPictureFront: Joi.string().optional(),
+    // idPictureBack: Joi.string().optional(),
+    // selfie: Joi.string().optional(),
     homeAddress: Joi.string().optional(),
     workAddress: Joi.string().optional(),
     emergencyContact: Joi.object({

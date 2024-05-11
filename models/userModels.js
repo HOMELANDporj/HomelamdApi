@@ -5,6 +5,8 @@ const userSchema = mongoose.Schema({
   name: {
     type: String,
     required: [true, "Name is required"],
+    minlength: 3,
+    maxlength: 50,
   },
   phoneNumber: {
     type: String,
@@ -16,16 +18,24 @@ const userSchema = mongoose.Schema({
     required: [true, "Password is required"],
   },
   idPictureFront: {
-    type: String,
-    // required: [true, "ID Picture (Front) is required"] // Optional, uncomment if needed
+    type:String,
+    required: [true, "Id picture front is required"],
+    // type: mongoose.Schema.Types.ObjectId,
+    // ref: 'Image',
   },
   idPictureBack: {
-    type: String,
-    // required: [true, "ID Picture (Back) is required"] // Optional, uncomment if needed
+    type:String,
+    required: [true, "Id picture back is required"],
+    // type: mongoose.Schema.Types.ObjectId,
+    // ref: 'Image',
   },
   selfie: {
-    type: String,
-    // required: [true, "Selfie is required"] // Optional, uncomment if needed
+    type:String,
+    required: [true, "Selfie is required"],
+    // type: mongoose.Schema.Types.ObjectId,
+    // ref: 'Image',
+    // type: mongoose.Schema.Types.ObjectId,
+    // ref: 'Image',
   },
   homeAddress: {
     type: String,
