@@ -5,7 +5,7 @@ const multer = require("multer")
 const path = require('path');
 const router = express.Router();
 const {
-     createVehicle,
+    // createVehicle,
      getMyVehicles,
      updateVehicle,
      assignDriverToVehicle,
@@ -31,9 +31,9 @@ const storage = multer.diskStorage({
 const validateToken = require('../middleware/validateTokenHandler');
 
 // POST /api/vehicles - Create a new vehicle
-router.post('/createVehicle ',upload.fields([
-     { name: 'librai', maxCount: 1 },
-   ]), validateToken, createVehicle);
+// router.post('/createVehicle ',upload.fields([
+//      { name: 'librai', maxCount: 1 },
+//    ]), validateToken, createVehicle);
 
 // Route to retrieve all vehicles created by the current user
 router.get('/getvehicles', validateToken, getMyVehicles);

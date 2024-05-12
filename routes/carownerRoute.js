@@ -6,7 +6,10 @@ const {
     createCarOwner,
     getAllCarOwners,
     deleteCarOwner,
-    updateCarOwner 
+    updateCarOwner,
+    signinCarOwner,
+    createDriver,
+    createVehicle
 
 } = require('../controllers/carownerController');
 
@@ -33,9 +36,24 @@ router.post('/createCarOwner',upload.fields([
     { name: 'idPictureFront', maxCount: 1 },
     { name: 'idPictureBack', maxCount: 1 },
     { name: 'selfie', maxCount: 1 }
-  ]), validateToken,createCarOwner);
+  ]),createCarOwner);
+
+
+  router.post('/registerdriver',upload.fields([
+    { name: 'idPictureFront', maxCount: 1 },
+    { name: 'idPictureBack', maxCount: 1 },
+    { name: 'selfie', maxCount: 1 }
+  ]), validateToken,createDriver);
+
+
+  router.post('/createVehicle',upload.fields([
+    { name: 'librai', maxCount: 1 },
+    { name: 'carimg', maxCount: 1 }
+  ]), validateToken, createVehicle);
 
 router.get('/getcarowner',validateToken,getAllCarOwners);
 router.delete('/deletecarowner/:id',validateToken,deleteCarOwner);
 router.put('/updatecarowner/:id', validateToken,updateCarOwner );
+router.post('/signincarowner',signinCarOwner );
+
 module.exports = router;

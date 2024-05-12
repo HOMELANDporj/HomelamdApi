@@ -34,11 +34,11 @@ router.get('/getdriver',validateToken, driverController.getAllDrivers);
 router.get('/getdriverbyid/:id', validateToken, driverController.getDriverById);
 
 // Create a new driver (accessible only to authenticated users)
-router.post('/registerdriver',upload.fields([
-    { name: 'idPictureFront', maxCount: 1 },
-    { name: 'idPictureBack', maxCount: 1 },
-    { name: 'selfie', maxCount: 1 }
-  ]), validateToken, driverController.createDriver);
+// router.post('/registerdriver',upload.fields([
+//     { name: 'idPictureFront', maxCount: 1 },
+//     { name: 'idPictureBack', maxCount: 1 },
+//     { name: 'selfie', maxCount: 1 }
+//   ]), validateToken, driverController.createDriver);
 
 // Update a driver (accessible only to the owner of the driver)
 router.put('/updatedriver/:id', validateToken, driverController.updateDriver);

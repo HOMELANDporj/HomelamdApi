@@ -20,7 +20,9 @@ const{
     updateUserProfile,
     deleteUser
 }=require("../controllers/userController");
-
+const { 
+  requestService,
+} = require("../controllers/serviceController");
 // Set up Multer storage
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -57,5 +59,5 @@ router.route('/updateuser/:id').put(updateUserProfile)
 
 router.route('/deleteuser/:id').delete(deleteUser)
 router.get("/getCurrentUser",validateToken, currentUser)
-
+router.post('/requestService', validateToken, requestService);
  module.exports=router

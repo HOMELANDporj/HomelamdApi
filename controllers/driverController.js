@@ -35,68 +35,68 @@ const getDriverById = async (req, res) => {
 };
 
 
-const createDriver = asyncHandler(async (req, res) => {
-    console.log("The body requested to post is => ", req.body);
+// const createDriver = asyncHandler(async (req, res) => {
+//     console.log("The body requested to post is => ", req.body);
  
-    const {
-        name,
-        phoneNumber,
-        password,
-        vehicle,
-        homeAddress, 
-        workAddress,
+//     const {
+//         name,
+//         phoneNumber,
+//         password,
+//         vehicle,
+//         homeAddress, 
+//         workAddress,
         
-      } = req.body;
+//       } = req.body;
 
-    const idPictureFront = req.files['idPictureFront'][0].filename;
-    const idPictureBack = req.files['idPictureBack'][0].filename;
-    const selfie = req.files['selfie'][0].filename;
+//     const idPictureFront = req.files['idPictureFront'][0].filename;
+//     const idPictureBack = req.files['idPictureBack'][0].filename;
+//     const selfie = req.files['selfie'][0].filename;
 
-    // Define Joi schema for validation
-    const driverSchema = Joi.object({
-        name: Joi.string().required().min(3).max(50),
-        licenseNumber: Joi.string().optional(),
-        vehicle: Joi.string().optional(),
-        phoneNumber: Joi.string().regex(/^\d{10}$/).required(),
-        password: Joi.string().min(8).required(),
-        homeAddress: Joi.string().optional(),
-        // idPictureFront: Joi.string().optional(),
-        // idPictureBack: Joi.string().optional(),
-        // selfie: Joi.string().optional(),
-        workAddress: Joi.string().optional(),
+//     // Define Joi schema for validation
+//     const driverSchema = Joi.object({
+//         name: Joi.string().required().min(3).max(50),
+//         licenseNumber: Joi.string().optional(),
+//         vehicle: Joi.string().optional(),
+//         phoneNumber: Joi.string().regex(/^\d{10}$/).required(),
+//         password: Joi.string().min(8).required(),
+//         homeAddress: Joi.string().optional(),
+//         // idPictureFront: Joi.string().optional(),
+//         // idPictureBack: Joi.string().optional(),
+//         // selfie: Joi.string().optional(),
+//         workAddress: Joi.string().optional(),
         
         
-        // Assuming vehicle is provided as ID of an existing vehicle
-    });
+//         // Assuming vehicle is provided as ID of an existing vehicle
+//     });
 
-    // Validate the request body against the schema
-    const { error } = driverSchema.validate(req.body);
+//     // Validate the request body against the schema
+//     const { error } = driverSchema.validate(req.body);
 
-    if (error) {
-        return res.status(400).json({ message: error.details[0].message });
-    }
-      // Hash the given password
-  const hashedPassword = await bcrypt.hash(password, 10);
+//     if (error) {
+//         return res.status(400).json({ message: error.details[0].message });
+//     }
+//       // Hash the given password
+//   const hashedPassword = await bcrypt.hash(password, 10);
 
 
-    // Create the driver
-    const driver = new Driver({
-        name,
-        phoneNumber,
-        password: hashedPassword,
-        idPictureFront,
-        idPictureBack,
-        selfie,
-        vehicle,
-        homeAddress, 
-        workAddress,
-        user: req.user.userId, // Assuming user ID is extracted from JWT payload
-    });
+//     // Create the driver
+//     const driver = new Driver({
+//         name,
+//         phoneNumber,
+//         password: hashedPassword,
+//         idPictureFront,
+//         idPictureBack,
+//         selfie,
+//         vehicle,
+//         homeAddress, 
+//         workAddress,
+//         user: req.user.userId, // Assuming user ID is extracted from JWT payload
+//     });
 
-    // Save the new driver to the database
-    await driver.save();
-    res.status(201).json(driver);
-});
+//     // Save the new driver to the database
+//     await driver.save();
+//     res.status(201).json(driver);
+// });
 
 // Update driver
 const updateDriver = async (req, res) => {
@@ -149,7 +149,7 @@ const deleteDriver = async (req, res) => {
 module.exports = {
     getAllDrivers,
     getDriverById,
-    createDriver,
+   // createDriver,
     updateDriver,
     deleteDriver
 };

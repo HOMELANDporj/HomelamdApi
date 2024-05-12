@@ -8,7 +8,7 @@ const serviceRequestSchema = mongoose.Schema({
   },
   pickupLocation: String,
   dropoffLocation: String,
-  pickupTime: Date,
+  pickupTime: String,
   status: {
     type: String,
     enum: ['pending', 'accepted', 'completed', 'cancelled'],

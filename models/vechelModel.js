@@ -26,6 +26,12 @@ const vehicleSchema = mongoose.Schema({
     // type: mongoose.Schema.Types.ObjectId,
     // ref: 'Image',
   },
+  carimg: {
+    type:String,
+    required: [true, "Id picture front is required"],
+    // type: mongoose.Schema.Types.ObjectId,
+    // ref: 'Image',
+  },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'

@@ -23,7 +23,7 @@ const requestService = asyncHandler(async (req, res) => {
       const serviceRequest = new ServiceRequest({
         user: userId,
         pickupLocation,
-        dropoffLocation,
+        dropoffLocation, 
         pickupTime
       });
   
