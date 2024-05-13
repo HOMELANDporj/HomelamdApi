@@ -45,6 +45,7 @@ router.put('/updatedriver/:id', validateToken, driverController.updateDriver);
 
 // Delete a driver (accessible only to the owner of the driver)
 router.delete('/deletedriver/:id', validateToken, driverController.deleteDriver);
+router.post('/signindriver',driverController.signinDriver );
 
 module.exports = router;
  

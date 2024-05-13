@@ -8,7 +8,7 @@ const validateToken=require("../middleware/validateTokenHandler")
 //@route POST /api/contacts
 //@access public
 const registerUser = asyncHandler(async (req, res) => {
-  console.log("The body requested to post is => ", req.body);
+  //console.log("The body requested to post is => ", req.body);
    //const { idPictureFrontId, idPictureBackId, selfieId } = req.files;
  
   const {

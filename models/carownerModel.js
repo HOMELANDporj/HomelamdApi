@@ -1,6 +1,7 @@
 // models/carOwner.js
 
 const mongoose = require('mongoose');
+const Profile= require("./profileModel")
 
 const carOwnerSchema = new mongoose.Schema({
   name: { 
@@ -67,6 +68,38 @@ notifications: [{
      }]
 }, { timestamps: true }
 );
+// Middleware to create profile for a new car owner
+carOwnerSchema.pre('save', async function(next) {
+  try {
+    // Only create profile if it doesn't already exist
+    if (!this.profile) {
+      // Create a new profile
+      const newProfile = new Profile({
+        user: this._id,
+        fullName: this.name,
+        address: this.address,
+        ciy:this.city,
+        country: this.country,
+        idPictureFront: this.idPictureFront,
+        idPictureBack: this.idPictureBack,
+        selfie: this.selfie,
+        
+       // organizationName: this.organizationName,
+       // contactInformation: this.contactInformation,
+       // emergencyContact: this.emergencyContact,
+        phoneNumber: this.phoneNumber
+        // Add other profile fields here
+      });
+      // Save the profile
+      await newProfile.save();
+      // Set the profile reference in the user document
+      this.profile = newProfile._id;
+    }
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
 
 const CarOwner = mongoose.model('CarOwner', carOwnerSchema);
 

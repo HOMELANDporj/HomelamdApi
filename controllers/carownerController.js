@@ -9,7 +9,7 @@ const Vehicle = require('../models/vechelModel');
  
 // Create Car Owner
 const createCarOwner = asyncHandler(async (req, res) => {
-  console.log("The body requested to post is => ", req.body);
+ // console.log("The body requested to post is => ", req.body);
  
   const {
     name,
@@ -68,7 +68,7 @@ const createCarOwner = asyncHandler(async (req, res) => {
 /***************create driver***********************************/
 //*************************************************************** */ 
 const createDriver = asyncHandler(async (req, res) => {
-  console.log("The body requested to post is => ", req.body);
+  //console.log("The body requested to post is => ", req.body);
 
   const {
       name,
@@ -256,7 +256,7 @@ const deleteCarOwner = async (req, res) => {
     }
   };
 
-  //@desc Sign in user
+  //@desc Sign in car owner
 //@route POST /api/users/signin
 //@access Public
 
@@ -323,6 +323,12 @@ const signinCarOwner = asyncHandler(async (req, res) => {
   }
 });
 
+
+
+
+
+
+
 module.exports = {
     createCarOwner,
     getAllCarOwners,
@@ -330,5 +336,6 @@ module.exports = {
     updateCarOwner,
     signinCarOwner,
     createDriver,
-    createVehicle
+    createVehicle,
+
 }

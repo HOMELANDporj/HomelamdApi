@@ -4,6 +4,8 @@ const Driver = require('../models/driverModel');
 const bcrypt = require('bcrypt');
 const Joi = require('joi');
 const asyncHandler=require("express-async-handler")
+const jwt = require("jsonwebtoken");
+
 // Get all drivers 
 const getAllDrivers = async (req, res) => {
     try {
@@ -145,11 +147,82 @@ const deleteDriver = async (req, res) => {
     }
 };
 
+  //@desc Sign in car owner
+//@route POST /api/users/signin
+//@access Public
+
+const signinDriver = asyncHandler(async (req, res) => {
+    const { phoneNumber, password } = req.body;
+  
+    // Basic validation
+    if (!phoneNumber || !password) {
+      res.status(400).json({ message: "All fields are required" });
+      return;
+    }
+  
+    try {
+      // Find the user by phone number
+      const driver = await Driver.findOne({ phoneNumber });
+  
+      if (!driver) {
+        res.status(400).json({ message: "Invalid phone number" });
+        return;
+      }
+  
+      // Compare hashed password with the provided password
+      const isMatch = await bcrypt.compare(password, driver.password);
+  
+      if (!isMatch) {
+        res.status(401).json({ message: "Invalid password" }); // Use 401 for unauthorized access
+        return;
+      }
+  
+      // Generate JWT with 10 minutes expiration time (you can adjust expiresIn)
+      const payload = {
+        userId: driver._id,
+        name: driver.name, // Include desired user data in payload
+        phoneNumber: driver.phoneNumber,
+      };
+     // console.log(user)
+      const token = jwt.sign({
+        user:{
+          
+            userId: driver._id,
+            name: driver.name, // Include desired user data in payload
+            phoneNumber: driver.phoneNumber,
+            licenseNumber:driver.licenseNumber
+            // address: carowner.address,
+            // phoneNumber: carowner.phoneNumber,
+            // city: carowner.city,
+            //  country: carowner.country,
+            // idPictureFront: carowner.idPictureFront,
+            // idPictureBack: carowner.idPictureBack,
+            // selfie: carowner.selfie,
+           
+          
+        },}, 
+        process.env.TOKEN_SECRET, { expiresIn: "60m" });
+  
+      res.status(200).json({
+        message: "Login successful",
+        token,
+        
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Server Error" });
+      return // Consider more specific error handling
+    }
+  });
+  
+  
+  
 
 module.exports = {
     getAllDrivers,
     getDriverById,
    // createDriver,
     updateDriver,
-    deleteDriver
+    deleteDriver,
+    signinDriver
 };
