@@ -1,3 +1,3 @@
-this is the forst commit
+this is the backend for homeland logestic project for debre birhan university 
 
-commit 2 add getCurrentUser endpoint and token 
+
