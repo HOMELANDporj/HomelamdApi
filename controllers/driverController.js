@@ -6,7 +6,13 @@ const Joi = require('joi');
 const asyncHandler=require("express-async-handler")
 const jwt = require("jsonwebtoken");
 
-// Get all drivers 
+/**
+ * Get all drivers
+ *
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Promise<void>} - Resolves when all drivers are fetched successfully, rejects otherwise
+ */
 const getAllDrivers = async (req, res) => {
     try {
         const drivers = await Driver.find();
@@ -15,8 +21,13 @@ const getAllDrivers = async (req, res) => {
         console.error('Error fetching drivers:', error);
         res.status(500).json({ message: 'Server Error' });
     }
-};
-// Get driver by ID
+};/**
+ * Get driver by ID
+ *
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Promise<void>} - Resolves when driver is fetched successfully, rejects otherwise
+ */
 const getDriverById = async (req, res) => {
     try {
         // Extract the user ID from the JWT payload
@@ -35,7 +46,6 @@ const getDriverById = async (req, res) => {
         res.status(500).json({ message: 'Server Error' });
     }
 };
-
 
 // const createDriver = asyncHandler(async (req, res) => {
 //     console.log("The body requested to post is => ", req.body);
@@ -99,8 +109,13 @@ const getDriverById = async (req, res) => {
 //     await driver.save();
 //     res.status(201).json(driver);
 // });
-
-// Update driver
+/**
+ * Update driver
+ *
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Promise<void>} - Resolves when driver is updated successfully, rejects otherwise
+ */
 const updateDriver = async (req, res) => {
     try {
         // Extract the user ID from the JWT payload
@@ -127,7 +142,13 @@ const updateDriver = async (req, res) => {
     }
 };
 
-// Delete driver
+/**
+ * Delete driver
+ *
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Promise<void>} - Resolves when driver is deleted successfully, rejects otherwise
+ */
 const deleteDriver = async (req, res) => {
     try {
         // Extract the user ID from the JWT payload
@@ -147,10 +168,15 @@ const deleteDriver = async (req, res) => {
     }
 };
 
-  //@desc Sign in car owner
-//@route POST /api/users/signin
-//@access Public
-
+/**
+ * Sign in car owner
+ * @route POST /api/users/signin
+ * @access Public
+ * @param {string} phoneNumber - The phone number of the car owner.
+ * @param {string} password - The password of the car owner.
+ * @returns {object} - An object containing a success message and a JSON Web Token (JWT).
+ * @throws {Error} - If the phone number or password is invalid.
+ */
 const signinDriver = asyncHandler(async (req, res) => {
     const { phoneNumber, password } = req.body;
   

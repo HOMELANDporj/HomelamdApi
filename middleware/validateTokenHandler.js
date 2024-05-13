@@ -1,6 +1,17 @@
 const asyncHandler = require("express-async-handler");
 const jwt = require("jsonwebtoken");
 
+
+/**
+ * @description This middleware function validates the JWT token and verifies its authenticity.
+ * It extracts the token from the authorization header, verifies it using JWT.verify,
+ * and attaches the decoded user data to req.user.
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @param {Function} next - Express next middleware function.
+ * @returns {Promise<void>} - Returns a Promise that resolves when the token is successfully verified.
+ * @throws {Error} - Throws an error if the token verification fails.
+ */
 const validateToken = asyncHandler(async (req, res, next) => {
   let token;
 
@@ -32,15 +43,20 @@ const validateToken = asyncHandler(async (req, res, next) => {
 
 module.exports = validateToken;
 
-///***************************************************************************** */
 
-//THIS CODE BELOW MAKES THE VALIDATE TOKEN TO BE 
-//ROLE BASED ACCESS CONTROL
-
-
-// const asyncHandler = require("express-async-handler");
-// const jwt = require("jsonwebtoken");
-
+/**
+ * @description This middleware function validates the JWT token and verifies its authenticity,
+ * as well as checks if the user has the required role.
+ * It extracts the token from the authorization header, verifies it using JWT.verify,
+ * attaches the decoded user data to req.user, and checks if the user has the required role.
+ * If the user does not have the required role, it returns a 403 Forbidden response.
+ * @param {Array} roles - An array of roles that the user must have to access the route.
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @param {Function} next - Express next middleware function.
+ * @returns {Promise<void>} - Returns a Promise that resolves when the token is successfully verified and the user has the required role.
+ * @throws {Error} - Throws an error if the token verification fails or the user does not have the required role.
+ */
 // const validateTokenAndRole = (roles) => asyncHandler(async (req, res, next) => {
 //   let token;
 

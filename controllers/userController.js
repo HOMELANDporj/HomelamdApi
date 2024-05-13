@@ -4,9 +4,14 @@ const Joi = require("joi"); // Import Joi for validation
 const User=require("../models/userModels")
 const jwt = require("jsonwebtoken");
 const validateToken=require("../middleware/validateTokenHandler")
-//@desc crete  contact
-//@route POST /api/contacts
-//@access public
+
+
+/**
+ * Register a new user
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Object} - The newly created user object
+ */
 const registerUser = asyncHandler(async (req, res) => {
   //console.log("The body requested to post is => ", req.body);
    //const { idPictureFrontId, idPictureBackId, selfieId } = req.files;
@@ -74,9 +79,12 @@ const registerUser = asyncHandler(async (req, res) => {
 
 
 
-//@desc Get contact
-//@route GEt /api/contacts
-//@access public
+/**
+ * Get all users
+ * @route GET /api/contacts
+ * @access public
+ * @returns {Array} - An array of all users
+ */
 const getAllUsers = asyncHandler(async (req, res) => {
   try {
     const users = await User.find();
@@ -86,10 +94,12 @@ const getAllUsers = asyncHandler(async (req, res) => {
     res.status(500).json({ message: 'Server Error' });
   }
 });
-
-//@desc Get contact by id 
-//@route GEt /api/contacts/:id
-//@access public
+/**
+ * Get all users
+ * @route GET /api/contacts
+ * @access public
+ * @returns {Array} - An array of all users
+ */
 const getUserById = asyncHandler(async (req, res) => {
   // Define Joi schema for validation
   const schema = Joi.object({
@@ -119,10 +129,26 @@ const getUserById = asyncHandler(async (req, res) => {
   }
 });
 
-
-//@desc update contact by id 
-//@route PUT /api/contacts/:id
-//@access public
+/**
+ * Update a user's profile by ID.
+ * @route PUT /api/contacts/:id
+ * @access public
+ * @param {Object} req - Express request object
+ * @param {String} req.params.id - The ID of the user to update
+ * @param {Object} req.body - The updated user information
+ * @property {String} [req.body.name] - The updated user's name
+ * @property {String} [req.body.phoneNumber] - The updated user's phone number
+ * @property {String} [req.body.password] - The updated user's password
+ * @property {String} [req.body.idPictureFront] - The updated user's ID picture front
+ * @property {String} [req.body.idPictureBack] - The updated user's ID picture back
+ * @property {String} [req.body.selfie] - The updated user's selfie
+ * @property {String} [req.body.homeAddress] - The updated user's home address
+ * @property {String} [req.body.workAddress] - The updated user's work address
+ * @property {Object} [req.body.emergencyContact] - The updated user's emergency contact information
+ * @property {String} [req.body.emergencyContact.name] - The updated user's emergency contact's name
+ * @property {String} [req.body.emergencyContact.phoneNumber] - The updated user's emergency contact's phone number
+ * @returns {Object} - The updated user object
+ */
 const updateUserProfile = asyncHandler(async (req, res) => {
   // Define Joi schema for validation
   const schema = Joi.object({
@@ -169,9 +195,15 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     res.status(500).json({ message: 'Server Error' });
   }
 });
-//@desc Delete contact by id 
-//@route DELETE /api/contacts/:id
-//@access public
+
+
+/**
+ * Delete a user by ID.
+ * @route DELETE /api/contacts/:id
+ * @access private
+ * @param {String} req.params.id - The ID of the user to delete
+ * @returns {Object} - A JSON object containing a success message if the user is successfully deleted, or an error message if the user is not found or if there is a server error.
+ */
 const deleteUser = asyncHandler(async (req, res) => {
   // Define Joi schema for validation
   const schema = Joi.object({
@@ -208,11 +240,15 @@ const deleteUser = asyncHandler(async (req, res) => {
   }
 });
 
-
-//@desc Sign in user
-//@route POST /api/users/signin
-//@access Public
-
+/**
+ * Sign in user
+ * @route POST /api/users/signin
+ * @access Public
+ * @param {Object} req - Express request object
+ * @param {String} req.body.phoneNumber - The phone number of the user to sign in
+ * @param {String} req.body.password - The password of the user to sign in
+ * @returns {Object} - A JSON object containing a success message and a JWT token if the user is successfully signed in, or an error message if the user is not found or if there is a server error.
+ */
 const signin = asyncHandler(async (req, res) => {
   const { phoneNumber, password } = req.body;
 
@@ -276,9 +312,13 @@ const signin = asyncHandler(async (req, res) => {
 });
 
 
-//@desc get current user
-//@route POST /api/users/getCurrentUser
-//@access private
+/**
+ * Get the current user.
+ * @route POST /api/users/getCurrentUser
+ * @access private
+ * @param {Object} req - Express request object
+ * @returns {Object} - The current user object
+ */
 const currentUser = asyncHandler(async (req, res) => {
   // Wait for req.user to be populated by validateToken middleware
  // await validateToken(req, res); 

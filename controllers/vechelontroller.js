@@ -1,5 +1,7 @@
-// vehicleController.js
-
+/**
+ * Import the Vehicle model and Joi library.
+ * @module vehicleController
+ */
 const Vehicle = require('../models/vechelModel');
 const Joi = require('joi');
 
@@ -49,7 +51,15 @@ const Joi = require('joi');
 //   }
 // };
 
-// Function to retrieve all vehicles created by the current user
+
+
+/**
+ * Function to retrieve all vehicles created by the current user
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Promise<void>} - Resolves when the list of vehicles is returned
+ * @throws {Error} - Throws an error if there's an issue retrieving the vehicles
+ */
 const getMyVehicles = async (req, res) => {
     try {
       // Assuming the authenticated user's ID is available in the request object
@@ -67,7 +77,13 @@ const getMyVehicles = async (req, res) => {
   };
 
   
-// Function to update the details of a vehicle
+/**
+ * Function to update the details of a vehicle
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Promise<void>} - Resolves when the updated vehicle is returned
+ * @throws {Error} - Throws an error if there's an issue updating the vehicle
+ */
 const updateVehicle = async (req, res) => {
     try {
       // Retrieve the ID of the vehicle from the request parameters
@@ -98,6 +114,14 @@ const updateVehicle = async (req, res) => {
   };
   
  
+
+  /**
+ * Assigns a driver to a vehicle.
+ * @param {Object} req - Express request object containing the vehicle ID and driver ID in the params.
+ * @param {Object} res - Express response object.
+ * @returns {Promise<void>} - Resolves when the driver is assigned to the vehicle.
+ * @throws {Error} - Throws an error if there's an issue assigning the driver to the vehicle.
+ */
 const assignDriverToVehicle = async (req, res) => {
     try {
       // Extract vehicle ID and driver ID from request parameters
@@ -138,7 +162,13 @@ const assignDriverToVehicle = async (req, res) => {
     }
   };
 
-
+/**
+ * Function to delete a vehicle by its ID.
+ * @param {Object} req - Express request object containing the vehicle ID in the params.
+ * @param {Object} res - Express response object.
+ * @returns {Promise<void>} - Resolves when the vehicle is deleted.
+ * @throws {Error} - Throws an error if there's an issue deleting the vehicle.
+ */
   const deleteVehicle = async (req, res) => {
     try {
       const { id } = req.params;
@@ -156,6 +186,8 @@ const assignDriverToVehicle = async (req, res) => {
       res.status(500).json({ message: 'Server Error' });
     }
   };
+
+
 module.exports = {
   //createVehicle,
   getMyVehicles,

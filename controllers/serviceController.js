@@ -1,11 +1,27 @@
+/**
+ * @description Create a new service request
+ * @route POST /api/contacts
+ * @access private
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Object} - A JSON object containing the created service request and a success message
+ * @throws {Error} - If any error occurs during the process
+ */
 const asyncHandler=require("express-async-handler")
 const ServiceRequest = require('../models/serviceModel');
 const Driver = require('../models/driverModel');
 const Notification= require('../models/notificatioModel');
 
-//@desc crete  contact
-//@route POST /api/contacts
-//@access private
+
+/**
+ * @description Create a new service request
+ * @route POST /api/contacts
+ * @access private
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Object} - A JSON object containing the created service request and a success message
+ * @throws {Error} - If any error occurs during the process
+ */
 const requestService = asyncHandler(async (req, res) => {
   try {
       // Extract necessary data from the request body
@@ -55,10 +71,15 @@ const requestService = asyncHandler(async (req, res) => {
     }
 });
 
-//@desc get all services requestes
-//@route GET /api/contacts
-//@access private
-// serviceRequestController.js
+/**
+ * @description Get all services requests made by the signed-in user
+ * @route GET /api/contacts
+ * @access private
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Object} - A JSON object containing the user's service requests
+ * @throws {Error} - If any error occurs during the process
+ */
 const getAllServiceRequests = async (req, res) => {
   try {
       // Retrieve the user ID of the signed-in user from the request object
@@ -75,9 +96,15 @@ const getAllServiceRequests = async (req, res) => {
   }
 };
 
-//@desc crete  contact
-//@route PUT /api/contacts
-//@access private
+/**
+ * @description Update a service request
+ * @route PUT /api/contacts
+ * @access private
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Object} - A JSON object containing the updated service request and a success message
+ * @throws {Error} - If any error occurs during the process
+ */
 const updateServiceRequest = async (req, res) => {
   try {
     // Retrieve the ID of the service request from the request parameters
@@ -136,11 +163,15 @@ const updateServiceRequest = async (req, res) => {
 };
 
 
-
-//@desc crete  contact
-//@route PUT /api/contacts
-//@access private
-// serviceRequestController.js
+/**
+ * @description Cancels a service request
+ * @route PUT /api/contacts/:id
+ * @access private
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Object} - A JSON object containing the cancelled service request and a success message
+ * @throws {Error} - If any error occurs during the process
+ */
 const cancelServiceRequest = async (req, res) => {
   try {
       // Retrieve the ID of the service request from the request parameters

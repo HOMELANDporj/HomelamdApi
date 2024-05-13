@@ -5,10 +5,9 @@ const Notification = require("../models/notificatioModel");
  * Accessible only to signed-in users.
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
+ * @returns {Promise<void>} - Resolves when the unread notifications are fetched successfully.
+ * @throws {Error} - Throws an error if there's an issue fetching the unread notifications.
  */
-//@desc Fetches all unread notifications for the authenticated user.
-//@route GET 
-//@access private
 const viewUnreadNotifications = async (req, res) => {
   try {
     // Retrieve the user ID from the request object
@@ -33,10 +32,9 @@ const viewUnreadNotifications = async (req, res) => {
  * Accessible only to signed-in users.
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
+ * @returns {Promise<void>} - Resolves when the filtered notifications are fetched successfully.
+ * @throws {Error} - Throws an error if there's an issue fetching the filtered notifications.
  */
-//@desc  Filters notifications based on criteria specified in query parameters.
-//@route GET 
-//@access private
 const filterNotifications = async (req, res) => {
     try {
       // Retrieve the user ID from the request object
@@ -64,10 +62,16 @@ const filterNotifications = async (req, res) => {
   };
 
 
-// Controller function to count unread notifications for the authenticated user
-//@desc Controller function to count unread notifications for the authenticated user
-//@route GET 
-//@access private
+/**
+ * Controller function to count unread notifications for the authenticated user
+ * @desc Controller function to count unread notifications for the authenticated user
+ * @route GET
+ * @access private
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Promise<void>} - Resolves when the count of unread notifications is fetched successfully.
+ * @throws {Error} - Throws an error if there's an issue counting the unread notifications.
+ */
 const countUnreadNotifications = async (req, res) => {
   try {
     // Extract user ID from the request object (assuming it's populated by the authentication middleware)

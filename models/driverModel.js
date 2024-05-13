@@ -1,3 +1,33 @@
+/**
+ * @fileoverview This file contains the schema definition for a driver in the application.
+ * @module driverSchema
+ */
+
+/**
+ * @description This is the schema definition for a driver in the application.
+ * @typedef {Object} DriverSchema
+ * @property {String} name - The name of the driver.
+ * @property {String} phoneNumber - The phone number of the driver.
+ * @property {String} password - The password of the driver.
+ * @property {String} licenseNumber - The license number of the driver.
+ * @property {String} idPictureFront - The front image of the driver's ID.
+ * @property {String} idPictureBack - The back image of the driver's ID.
+ * @property {String} selfie - The selfie image of the driver.
+ * @property {ObjectId} vehicle - The ID of the vehicle associated with the driver.
+ * @property {ObjectId[]} serviceRequests - The IDs of the service requests associated with the driver.
+ * @property {String} role - The role of the driver, which is always 'driver'.
+ * @property {ObjectId} user - The ID of the user associated with the driver.
+ * @property {Date} createdAt - The timestamp when the driver was created.
+ * @property {Date} updatedAt - The timestamp when the driver was last updated.
+ */
+
+/**
+ * @description This function creates a new driver schema using Mongoose.
+ * @returns {Object} A new driver schema.
+ */
+
+
+
 const mongoose = require("mongoose");
 
 const driverSchema = mongoose.Schema({
@@ -61,7 +91,13 @@ const driverSchema = mongoose.Schema({
     required: true // Remove the unique constraint from here
   }
 }, { timestamps: true });
-// Middleware to create profile for a new driver 
+
+
+/**
+ * @description This function adds a pre-save middleware to the driver schema.
+ * @param {Object} next - The next middleware function in the chain.
+ * @returns {void} This function does not return a value.
+ */
 driverSchema.pre('save', async function(next) {
   try {
     // Only create profile if it doesn't already exist

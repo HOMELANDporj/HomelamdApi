@@ -1,3 +1,13 @@
+/**
+ * Import necessary modules and models.
+ * @param {import('express-async-handler')} asyncHandler - Express middleware for handling asynchronous operations.
+ * @param {import('bcrypt')} bcrypt - Library for password hashing.
+ * @param {import('joi')} Joi - Library for input validation.
+ * @param {import('./carownerModel')} CarOwner - Model for car owners.
+ * @param {import('jsonwebtoken')} jwt - Library for generating JSON Web Tokens.
+ * @param {import('./driverModel')} Driver - Model for drivers.
+ * @param {import('./vehicleModel')} Vehicle - Model for vehicles.
+ */
 const asyncHandler=require("express-async-handler")
 const bcrypt = require("bcrypt")
 const Joi = require("joi"); // Import Joi for validation
@@ -7,7 +17,14 @@ const Driver = require('../models/driverModel');
 const Vehicle = require('../models/vechelModel');
 
  
-// Create Car Owner
+
+
+/**
+ * Create a new car owner.
+ * @param {import('express').Request} req - Express request object containing the request body.
+ * @param {import('express').Response} res - Express response object for sending HTTP responses.
+ * @returns {import('express').Response} - Express response object containing the created car owner.
+ */
 const createCarOwner = asyncHandler(async (req, res) => {
  // console.log("The body requested to post is => ", req.body);
  
@@ -65,8 +82,12 @@ const createCarOwner = asyncHandler(async (req, res) => {
   res.status(201).json(carOwner);
 });
 
-/***************create driver***********************************/
-//*************************************************************** */ 
+/**
+ * Create a new driver.
+ * @param {import('express').Request} req - Express request object containing the request body.
+ * @param {import('express').Response} res - Express response object for sending HTTP responses.
+ * @returns {import('express').Response} - Express response object containing the created driver.
+ */
 const createDriver = asyncHandler(async (req, res) => {
   //console.log("The body requested to post is => ", req.body);
 
@@ -134,9 +155,12 @@ const hashedPassword = await bcrypt.hash(password, 10);
 
 
 
-//*************************create vechel*********************************** */
-//********************************************************* */
-
+/**
+ * Create a new vehicle.
+ * @param {import('express').Request} req - Express request object containing the request body.
+ * @param {import('express').Response} res - Express response object for sending HTTP responses.
+ * @returns {import('express').Response} - Express response object containing the created vehicle.
+ */
 const createVehicle = async (req, res) => {
   
   // Extract necessary data from the request body
@@ -189,7 +213,12 @@ const createVehicle = async (req, res) => {
 
 
 
-  // Get All Car Owners
+ /**
+ * Get all car owners.
+ * @param {import('express').Request} req - Express request object.
+ * @param {import('express').Response} res - Express response object.
+ * @returns {import('express').Response} - Express response object containing the array of car owners.
+ */
 const getAllCarOwners = async (req, res) => {
     try {
       // Check if the user is authorized
@@ -205,7 +234,12 @@ const getAllCarOwners = async (req, res) => {
     }
   };
 
-// Update Car Owner
+/**
+ * Update a car owner.
+ * @param {import('express').Request} req - Express request object containing the request body and params.
+ * @param {import('express').Response} res - Express response object for sending HTTP responses.
+ * @returns {import('express').Response} - Express response object containing the updated car owner.
+ */
 const updateCarOwner = async (req, res) => {
     try {
       const { name, password, phoneNumber, address, city, country, idPictureFront } = req.body;
@@ -237,7 +271,12 @@ const updateCarOwner = async (req, res) => {
   
 
 
-  // Delete Car Owner
+/**
+ * Delete a car owner.
+ * @param {import('express').Request} req - Express request object containing the params.
+ * @param {import('express').Response} res - Express response object for sending HTTP responses.
+ * @returns {import('express').Response} - Express response object containing a success message.
+ */
 const deleteCarOwner = async (req, res) => {
     try {
       // Check if the user is authorized
@@ -256,10 +295,12 @@ const deleteCarOwner = async (req, res) => {
     }
   };
 
-  //@desc Sign in car owner
-//@route POST /api/users/signin
-//@access Public
-
+ /**
+ * Sign in a car owner.
+ * @param {import('express').Request} req - Express request object containing the request body.
+ * @param {import('express').Response} res - Express response object for sending HTTP responses.
+ * @returns {import('express').Response} - Express response object containing a success message and a JSON Web Token.
+ */
 const signinCarOwner = asyncHandler(async (req, res) => {
   const { phoneNumber, password } = req.body;
 

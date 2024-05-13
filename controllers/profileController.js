@@ -1,8 +1,13 @@
 const Profile = require('../models/profileModel');
-//@desc get current profile
-//@route GET 
-//@access private
-// profileController.js
+/**
+ * @desc Get the current user's profile
+ * @route GET
+ * @access private
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Object} userProfile - The current user's profile
+ * @throws {Error} If the user's profile is not found
+ */
 const getCurrentUserProfile = async (req, res) => {
     try {
         // Assuming you have a function to retrieve the user's profile based on their ID
@@ -18,11 +23,19 @@ const getCurrentUserProfile = async (req, res) => {
         res.status(500).json({ message: 'Server Error' });
     }
 };
-// Function to update the current user's profile
-// @desc update current profile
-// @route PUT 
-// @access private
-// profileController.js
+
+
+/**
+ * Updates the current user's profile.
+ *
+ * @desc Update current profile
+ * @route PUT
+ * @access private
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Object} profile - The updated user's profile
+ * @throws {Error} If the user's profile is not found
+ */
 const updateProfile = async (req, res) => {
     try {
         // Extract the updated profile data from the request body
@@ -56,12 +69,18 @@ const updateProfile = async (req, res) => {
     }
 };
 
-// Search for profiles based on phone number 
-// it is query based on phone number like http://localhost:5001/Homeland/profile/search?phoneNumber=0902345678
-// Function to search the any user's profile using phonenumber
-// @desc search profile
-// @route GET 
-// @access private
+/**
+ * Search for profiles based on phone number.
+ * It is a query-based search using the phone number, like http://localhost:5001/Homeland/profile/search?phoneNumber=0902345678
+ * @desc search profile
+ * @route GET
+ * @access private
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @param {string} [req.query.phoneNumber] - The phone number to search for in the profiles
+ * @returns {Array} profiles - An array of profiles matching the provided phone number
+ * @throws {Error} If the phone number is not provided in the query
+ */
 const searchUserProfiles = async (req, res) => {
     try {
       const { phoneNumber } = req.query;
