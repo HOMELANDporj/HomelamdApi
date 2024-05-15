@@ -14,7 +14,7 @@ const port = process.env.PORT || 5000;
 
 // Middleware to parse JSON requests
 app.use(express.json());
-app.get('/Homeland/*', (req, res) => {
+app.get('/', (req, res) => {
   res.send('Welcome!');
 });
 // Routes
@@ -33,3 +33,5 @@ app.use(errorHandler);
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+// Export the Express API
+module.exports = app;
