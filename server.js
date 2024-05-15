@@ -14,7 +14,9 @@ const port = process.env.PORT || 5000;
 
 // Middleware to parse JSON requests
 app.use(express.json());
-
+app.get('/Homeland/*', (req, res) => {
+  res.send('Welcome!');
+});
 // Routes
 app.use("/Homeland/User", require("./routes/userRoutes"));
 app.use("/Homeland/service", require("./routes/serviceRequestRout")); // Corrected typo
