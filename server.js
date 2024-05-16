@@ -15,7 +15,16 @@ const port = process.env.PORT || 5000;
 // Middleware to parse JSON requests
 app.use(express.json());
 app.get('/', (req, res) => {
-  res.send('Welcome!');
+  res.send(`Welcome homeland logestic api server!
+  /Homeland/User/register ,signin , updateuser/:id
+  /Homeland/service
+ /Homeland/profile
+ /Homeland/notification
+ /Homeland/driver
+ /Homeland/vechel
+ /Homeland/carowners
+  
+  `);
 });
 // Routes
 app.use("/Homeland/User", require("./routes/userRoutes"));
