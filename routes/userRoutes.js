@@ -7,7 +7,7 @@ const{
    
     signin,
     currentUser,
-   // getAllUsers,
+    getAllUsers,
    // getUserById,
     registerUser,
     updateUserProfile,
@@ -56,7 +56,7 @@ const validateToken = require("../middleware/validateTokenHandler");
 
  
 //THIS ENDPIONTS ARE FOR ADMIN NOT FOR USERS
-//router.route('/getallusers').get(getAllUsers)
+router.route('/getallusers').get(getAllUsers)
 
 //router.route('/getuserbyid/:id').get(getUserById)
 
