@@ -9,7 +9,7 @@
  * @param {import('./vehicleModel')} Vehicle - Model for vehicles.
  */
 const asyncHandler=require("express-async-handler")
-const bcrypt = require("bcrypt")
+const bcrypt = require('bcryptjs')
 const Joi = require("joi"); // Import Joi for validation
 const CarOwner = require('../models/carownerModel');
 const jwt = require("jsonwebtoken");

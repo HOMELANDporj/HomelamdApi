@@ -1,5 +1,5 @@
 const asyncHandler=require("express-async-handler")
-const bcrypt = require("bcrypt")
+require('bcryptjs')
 const Joi = require("joi"); // Import Joi for validation
 const User=require("../models/userModels")
 const jwt = require("jsonwebtoken");

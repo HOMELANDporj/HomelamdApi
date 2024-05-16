@@ -1,7 +1,7 @@
 // controllers/driverController.js
 
 const Driver = require('../models/driverModel');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs')
 const Joi = require('joi');
 const asyncHandler=require("express-async-handler")
 const jwt = require("jsonwebtoken");
