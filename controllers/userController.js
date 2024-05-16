@@ -1,5 +1,5 @@
 const asyncHandler=require("express-async-handler")
-require('bcryptjs')
+const bcrypt=require('bcryptjs')
 const Joi = require("joi"); // Import Joi for validation
 const User=require("../models/userModels")
 const jwt = require("jsonwebtoken");
@@ -34,9 +34,9 @@ const registerUser = asyncHandler(async (req, res) => {
     name: Joi.string().required().min(3).max(50),
     phoneNumber: Joi.string().regex(/^\d{10}$/).required(),
     password: Joi.string().min(8).required(),
-    // idPictureFront: Joi.string().optional(),
-    // idPictureBack: Joi.string().optional(),
-    // selfie: Joi.string().optional(),
+    idPictureFront: Joi.string().optional(),
+    idPictureBack: Joi.string().optional(),
+    selfie: Joi.string().optional(),
     homeAddress: Joi.string().optional(),
     workAddress: Joi.string().optional(),
     emergencyContact: Joi.object({
